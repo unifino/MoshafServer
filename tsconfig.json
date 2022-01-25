@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/"
+      ],
+      "types/*": [
+        "src/types/*"
+      ]
+    },
+  },
+  "include": [
+    "src/**/*",
+  ]
+}
