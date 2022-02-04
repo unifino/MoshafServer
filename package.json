@@ -1,7 +1,7 @@
 {
-    "name": "dora-server",
+    "name": "moshaf-server",
     "version": "1.0.0",
-    "description": "Dora Secure Saver",
+    "description": "Moshaf Saver",
     "main": "app.js",
     "scripts": {
         "build": "rimraf dist && tsc",
