@@ -17,35 +17,29 @@ app.use( bodyParser.urlencoded( {
     parameterLimit: 50000
 } ) );
 
-// -- ============================================================ List of BeautyBGs =======
+// -- ===================================================================== Download =======
 
-app.get( '/handshake', ( req: express.Request, res: express.Response ) => {
+app.get( '/download', ( req: express.Request, res: express.Response ) => {
 
     // .. requests
-    const actionHeader = req.query.h as u.ActionHeader;
-    const action = req.query.a as u.ActionHeader;
-    const data = req.query.d as string;
     const alreadySyncedItemIDsString = req.query.i as string;
     const alreadySyncedItemIDs = alreadySyncedItemIDsString.split( "," ) as string[];
 
-    switch ( actionHeader ) {
+    cloud.CloudReport( alreadySyncedItemIDs )
+    .then( result => res.json( { status: 200, answer: result } ) )
+    .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
 
-        // .. download Mode
-        case "download":
-            cloud.CloudReport( alreadySyncedItemIDs )
-            .then( result => res.json( { status: 200, answer: result } ) )
-            .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
-            break;
+} );
 
-        // .. upload Mode
-        case "upload":
+// -- ======================================================================= Upload =======
 
-            break;
+app.get( '/upload', ( req: express.Request, res: express.Response ) => {
 
-        // .. unknown Mode
-        default: res.json( { status: 400, answer: "ERR 01" } ); break;
-
-    }
+    // .. requests
+    let data = req.query.d as string;
+    cloud.CloudWriter( data )
+    .then( result => res.json( { status: 200, answer: result } ) )
+    .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
 
 } );
 

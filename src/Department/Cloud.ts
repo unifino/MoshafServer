@@ -57,15 +57,19 @@ export function CloudReport ( filter: string[] ): Promise<c.Architecture[]> {
 
 export function CloudWriter ( patch: string ) {
 
-    return new Promise ( (rs, rx) => {
+    return new Promise ( async (rs, rx) => {
 
         try {
 
             let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ patch }' ) RETURNING *;`;
 
-            // const result = await client.query( qry );
+            const result = await client.query( qry );
 
-        } 
+            // ! better way to confirm??
+            if ( result.rowCount ) rs( "registered" );
+            else rx( "Unable to Register!" );
+
+        }
         catch (err) { rx( "EC05: " + err ) }
 
     } );
