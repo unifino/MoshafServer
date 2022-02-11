@@ -52,7 +52,6 @@ export function CloudReport ( filter: string[] ): Promise<c.Architecture[]> {
 
 }
 
-
 // -- ======================================================================================
 
 export function CloudWriter ( patch: string ) {
