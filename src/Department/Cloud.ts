@@ -54,11 +54,13 @@ export function CloudReport ( filter: string[] ): Promise<c.Architecture[]> {
 
 // -- ======================================================================================
 
-export function CloudWriter ( patch: string ) {
+export function CloudWriter ( data: string ) {
 
     return new Promise ( async (rs, rx) => {
 
         try {
+
+            let patch = JSON.parse( data );
 
             let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ patch }' ) RETURNING *;`;
 
