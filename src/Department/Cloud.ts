@@ -58,11 +58,11 @@ export function CloudWriter ( data: string ) {
 
     return new Promise ( async (rs, rx) => {
 
+        let patch = JSON.parse( data );
+        let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ patch }' ) RETURNING *;`;
         try {
 
-            let patch = JSON.parse( data );
 
-            let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ patch }' ) RETURNING *;`;
 
             const result = await client.query( qry );
 
@@ -71,7 +71,7 @@ export function CloudWriter ( data: string ) {
             else rx( "Unable to Register!" );
 
         }
-        catch (err) { rx( "EC05: " + err ) }
+        catch (err) { rx( "EC05: " + qry ) }
 
     } );
 
