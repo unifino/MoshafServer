@@ -33,7 +33,7 @@ app.get( '/download', ( req: express.Request, res: express.Response ) => {
 
 // -- ======================================================================= Upload =======
 
-app.get( '/upload', ( req: express.Request, res: express.Response ) => {
+app.post( '/upload', ( req: express.Request, res: express.Response ) => {
 
     // .. requests
     let data = req.query.d as string;
