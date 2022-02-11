@@ -36,7 +36,7 @@ app.get( '/download', ( req: express.Request, res: express.Response ) => {
 app.post( '/upload', ( req: express.Request, res: express.Response ) => {
 
     // .. requests
-    let data = req.query.d as string;
+    let data = req.body.d as string;
     cloud.CloudWriter( data )
     .then( result => res.json( { status: 200, answer: result } ) )
     .catch( err => res.json( { status: 400, answer: "ERR 02 : " + data } ) );
