@@ -54,23 +54,33 @@ export function CloudReport ( filter: string[] ): Promise<c.Architecture[]> {
 
 // -- ======================================================================================
 
-export function CloudWriter ( patch: string ) {
+export function CloudWriter ( data: string ) {
 
-    return new Promise ( async (rs, rx) => {
+    return new Promise ( (rs, rx) => {
 
-        let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ patch }' ) RETURNING *;`;
-        try {
+        isDuplicate( data )
+        .then( async isDuplicated => {
 
+            // .. a duplicated data has been found
+            if ( isDuplicated ) rs( "Duplicate Data" );
 
+            // .. there is no duplicated data found
+            else {
+                let qry = `INSERT INTO cloud ( patch ) VALUES ( '${ data }' ) RETURNING *;`;
+                try {
 
-            const result = await client.query( qry );
+                    const result = await client.query( qry );
 
-            // ! better way to confirm??
-            if ( result.rowCount ) rs( "registered" );
-            else rx( "Unable to Register!" );
+                    // ! better way to confirm??
+                    if ( result.rowCount ) rs( "registered" );
+                    else rx( "Unable to Register!" );
 
-        }
-        catch (err) { rx( "EC05: " + qry ) }
+                }
+                catch (err) { rx( "EC05: " + qry ) }
+            }
+
+        } )
+        .catch( err => rx( "EC08: " + err ) );
 
     } );
 
@@ -81,6 +91,34 @@ export function CloudWriter ( patch: string ) {
 function optimizer ( rows: c.Architecture[], filter: string[] ) {
 
     return rows.filter( x => !filter.includes( x.id.toString() ) )
+
+}
+
+// -- ======================================================================================
+
+function isDuplicate ( data: string ): Promise<boolean> {
+
+    return new Promise ( async (rs, rx) => {
+
+        let qry = `Select * from cloud where`;
+
+        try {
+
+            const qry = `SELECT * FROM cloud`;
+            client.query( qry, ( err, r: Result ) => {
+                // .. there is a Problem Here
+                if ( err ) rx( "EC07: " + err );
+                // .. checking duplication
+                else {
+                    r.rows.find( x => JSON.stringify( x.patch ) === data ) ?
+                        rs( true ) : rs( false );
+                }
+            } );
+
+        }
+        catch (err) { rx( "EC06: " + qry ) }
+
+    } );
 
 }
 
