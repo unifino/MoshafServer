@@ -132,6 +132,7 @@ function isDuplicate ( data: string ): Promise<boolean> {
 export function CloudOptimizer (): Promise<string[]> {
 
     let newCloud: string[] = [];
+    let newCloud2: string[] = [];
 
     return new Promise ( (rs, rx) => {
 
@@ -139,10 +140,11 @@ export function CloudOptimizer (): Promise<string[]> {
         .then( cloud => {
             for ( let row of cloud ) {
                 for ( let parcel_patch of row.patch ) {
-                    if ( newCloud.includes( parcel_patch ) ) newCloud.push( parcel_patch );
+                    if ( !newCloud.includes( parcel_patch ) ) newCloud.push( parcel_patch );
+                    else newCloud2.push( parcel_patch );
                 }
             }
-            rs( newCloud );
+            rs( [ newCloud2, newCloud] as any );
         } )
         .catch ( err => rx( "EC08: " + err ) )
 
