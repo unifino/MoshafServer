@@ -148,29 +148,31 @@ export function CloudOptimizer (): Promise<{}> {
             // .. loop on rows
             for ( let row of cloud ) {
 
-                // .. loop on patch-items
-                for ( let x of row.patch ) {
+                newCloud = cloud as any;
 
-                    // .. counter
-                    s++;
+                // // .. loop on patch-items
+                // for ( let x of row.patch ) {
 
-                    // .. remove corresponded data for "Fav-" or Report
-                    if ( x[0] === "Fav-" ) {
-                        t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
-                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
-                    }
-                    // .. remove corresponded data for "Unbound" or Report
-                    else if ( x[0] === "Unbound" ) {
-                        t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
-                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
-                    }
-                    // .. add to Cloud or report
-                    else {
-                        newCloud.find( o => o.toString() === x.toString() ) ?
-                            dub.push(x) : newCloud.push(x);
-                    }
+                //     // .. counter
+                //     s++;
 
-                }
+                //     // .. remove corresponded data for "Fav-" or Report
+                //     if ( x[0] === "Fav-" ) {
+                //         t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
+                //         ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
+                //     }
+                //     // .. remove corresponded data for "Unbound" or Report
+                //     else if ( x[0] === "Unbound" ) {
+                //         t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
+                //         ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
+                //     }
+                //     // .. add to Cloud or report
+                //     else {
+                //         newCloud.find( o => o.toString() === x.toString() ) ?
+                //             dub.push(x) : newCloud.push(x);
+                //     }
+
+                // }
 
             }
 
