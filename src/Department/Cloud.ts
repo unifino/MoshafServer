@@ -140,9 +140,9 @@ export function CloudOptimizer (): Promise<string[]> {
         CloudReport( [] )
         .then( cloud => {
 
-            // let tmpRow = JSON.parse( JSON.stringify( cloud[0] ) );
-            // cloud[0] = cloud[3];
-            // cloud[3] = tmpRow;
+            let tmpRow = JSON.parse( JSON.stringify( cloud[0] ) );
+            cloud[0] = cloud[3];
+            cloud[3] = tmpRow;
 
             for ( let row of cloud ) {
                 for ( let x of row.patch ) {
