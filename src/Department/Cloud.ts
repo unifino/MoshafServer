@@ -141,38 +141,32 @@ export function CloudOptimizer (): Promise<{}> {
 
         CloudReport( [] ).then( cloud => {
 
-            let tmpRow = JSON.parse( JSON.stringify( cloud[0] ) );
-            cloud[0] = cloud[3];
-            cloud[3] = tmpRow;
-
             // .. loop on rows
             for ( let row of cloud ) {
 
-                newCloud = cloud as any;
+                // .. loop on patch-items
+                for ( let x of row.patch ) {
 
-                // // .. loop on patch-items
-                // for ( let x of row.patch ) {
+                    // .. counter
+                    s++;
 
-                //     // .. counter
-                //     s++;
+                    // .. remove corresponded data for "Fav-" or Report
+                    if ( x[0] === "Fav-" ) {
+                        t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
+                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
+                    }
+                    // .. remove corresponded data for "Unbound" or Report
+                    else if ( x[0] === "Unbound" ) {
+                        t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
+                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
+                    }
+                    // .. add to Cloud or report
+                    else {
+                        newCloud.find( o => o.toString() === x.toString() ) ?
+                            dub.push(x) : newCloud.push(x);
+                    }
 
-                //     // .. remove corresponded data for "Fav-" or Report
-                //     if ( x[0] === "Fav-" ) {
-                //         t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
-                //         ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
-                //     }
-                //     // .. remove corresponded data for "Unbound" or Report
-                //     else if ( x[0] === "Unbound" ) {
-                //         t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
-                //         ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
-                //     }
-                //     // .. add to Cloud or report
-                //     else {
-                //         newCloud.find( o => o.toString() === x.toString() ) ?
-                //             dub.push(x) : newCloud.push(x);
-                //     }
-
-                // }
+                }
 
             }
 
