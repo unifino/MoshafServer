@@ -178,7 +178,7 @@ export function CloudOptimizer (): Promise<{}> {
             rs( {
                 odd,
                 dub,
-                "newCloudString": JSON.stringify( newCloud ),
+                newCloud,
                 "size": newCloud.length,
                 "diff": s - newCloud.length
             } );
