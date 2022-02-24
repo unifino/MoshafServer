@@ -1,5 +1,6 @@
 import * as fs                          from "fs";
 import { Pool, Client }                 from 'pg';
+import { StringifyOptions } from "querystring";
 import * as c                           from '../types/cloud'
 
 
@@ -128,14 +129,20 @@ function isDuplicate ( data: string ): Promise<boolean> {
 
 // -- ======================================================================================
 
-export function CloudOptimizer (): Promise<c.Architecture[]> {
+export function CloudOptimizer (): Promise<string[]> {
+
+    let newCloud: string[] = [];
 
     return new Promise ( (rs, rx) => {
 
         CloudReport( [] )
         .then( cloud => {
-
-            rs( cloud.slice(1) )
+            for ( let row of cloud ) {
+                for ( let parcel_patch of row.patch ) {
+                    if ( newCloud.includes( parcel_patch ) ) newCloud.push( parcel_patch );
+                }
+            }
+            rs( newCloud );
         } )
         .catch ( err => rx( "EC08: " + err ) )
 
