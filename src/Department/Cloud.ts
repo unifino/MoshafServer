@@ -173,7 +173,7 @@ export function CloudOptimizer (): Promise<{}> {
                 }
 
             }
-            rs( { odd, dub, "size": newCloud.length, "diff": 100 - newCloud.length } );
+            rs( { odd, dub, "size": newCloud.length, "diff": s - newCloud.length } );
 
         } )
         .catch ( err => rx( "EC08: " + err ) )
