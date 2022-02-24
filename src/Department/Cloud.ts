@@ -139,10 +139,11 @@ export function CloudOptimizer (): Promise<string[]> {
 
         CloudReport( [] )
         .then( cloud => {
+
             let tmpRow = JSON.parse( JSON.stringify( cloud[0] ) );
             cloud[0] = cloud[3];
             cloud[3] = tmpRow;
-
+            // for ( let row of cloud ) for ( let x of row.patch ) 
             for ( let row of cloud ) {
                 for ( let x of row.patch ) {
                     if ( x[0] === "Fav-" ) {
@@ -155,6 +156,7 @@ export function CloudOptimizer (): Promise<string[]> {
                         if ( ~t ) newCloud.splice( t, 1 );
                         else newCloud2.push( x.toString() );
                     }
+                    else newCloud.push( x );
                 }
             }
             rs( [ newCloud2, newCloud ] as any );
