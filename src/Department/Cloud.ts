@@ -146,6 +146,11 @@ export function CloudOptimizer (): Promise<string[]> {
                         if ( ~t ) newCloud.splice( t, 1 );
                         else newCloud2.push( x.toString() );
                     }
+                    else if ( x[0] === "Unbound" ) {
+                        t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
+                        if ( ~t ) newCloud.splice( t, 1 );
+                        else newCloud2.push( x.toString() );
+                    }
                 }
             }
             rs( [ newCloud2, newCloud ] as any );
