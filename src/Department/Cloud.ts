@@ -184,7 +184,7 @@ export function CloudOptimizer (): Promise<{}> {
             } );
 
         } )
-        .catch ( err => rx( "EC08: " + err ) )
+        .catch ( err => rx( "EC09: " + err ) )
 
     } );
 
