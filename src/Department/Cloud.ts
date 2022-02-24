@@ -58,6 +58,9 @@ export function CloudWriter ( data: string ) {
 
     return new Promise ( (rs, rx) => {
 
+        // .. check integrity!
+        if ( !data || data === "null" || data === "[]" ) rx( "No Valid Data to register" );
+
         isDuplicate( data )
         .then( async isDuplicated => {
 
