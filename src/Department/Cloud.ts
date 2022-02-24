@@ -129,37 +129,52 @@ function isDuplicate ( data: string ): Promise<boolean> {
 
 // -- ======================================================================================
 
-export function CloudOptimizer (): Promise<string[]> {
+export function CloudOptimizer (): Promise<{}> {
 
     let newCloud: c.earthRaw[] = [];
-    let newCloud2: string[] = [];
+    let odd: string[] = [];
+    let dub: c.earthRaw[] = [];
     let t: number;
+    let s: number = 0;
 
     return new Promise ( (rs, rx) => {
 
-        CloudReport( [] )
-        .then( cloud => {
+        CloudReport( [] ).then( cloud => {
 
             let tmpRow = JSON.parse( JSON.stringify( cloud[0] ) );
             cloud[0] = cloud[3];
             cloud[3] = tmpRow;
 
+            // .. loop on rows
             for ( let row of cloud ) {
+
+                // .. loop on patch-items
                 for ( let x of row.patch ) {
+
+                    // .. counter
+                    s++;
+
+                    // .. remove corresponded data for "Fav-" or Report
                     if ( x[0] === "Fav-" ) {
                         t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
-                        if ( ~t ) newCloud.splice( t, 1 );
-                        else newCloud2.push( x.toString() );
+                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
                     }
+                    // .. remove corresponded data for "Unbound" or Report
                     else if ( x[0] === "Unbound" ) {
                         t = newCloud.findIndex( x => x[0] === "Bound" && x[1] === x[1] );
-                        if ( ~t ) newCloud.splice( t, 1 );
-                        else newCloud2.push( x.toString() );
+                        ~t ? newCloud.splice( t, 1 ) : odd.push( x.toString() );
                     }
-                    else newCloud.push( x );
+                    // .. add to Cloud or report
+                    else {
+                        newCloud.find( x => x.toString() === x.toString() ) ?
+                        dub.push(x) : newCloud.push( x );
+                    }
+
                 }
+
             }
-            rs( [ newCloud2, newCloud.length, cloud[0].patch.length ] as any );
+            rs( { odd, dub, "size": newCloud.length, "diff": 100 - newCloud.length } );
+
         } )
         .catch ( err => rx( "EC08: " + err ) )
 
