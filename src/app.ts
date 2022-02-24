@@ -21,7 +21,7 @@ app.use( bodyParser.urlencoded( {
 
 app.get( '/merge', ( req: express.Request, res: express.Response ) => {
 
-    cloud.CloudReport( [] )
+    cloud.CloudOptimizer()
     .then( result => res.json( { status: 200, answer: result } ) )
     .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
 

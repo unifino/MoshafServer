@@ -125,4 +125,22 @@ function isDuplicate ( data: string ): Promise<boolean> {
 
 }
 
+
+// -- ======================================================================================
+
+export function CloudOptimizer (): Promise<c.Architecture[]> {
+
+    return new Promise ( (rs, rx) => {
+
+        CloudReport( [] )
+        .then( cloud => {
+
+            rs( cloud.slice(1) )
+        } )
+        .catch ( err => rx( "EC08: " + err ) )
+
+    } );
+
+}
+
 // -- ======================================================================================
