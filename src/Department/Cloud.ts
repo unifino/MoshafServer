@@ -173,10 +173,10 @@ export function CloudOptimizer (): Promise<{}> {
             // .. report
             rs( {
                 odd,
+                "size": newCloud.length,
+                "diff": s - newCloud.length,
                 dub,
                 newCloud,
-                "size": newCloud.length,
-                "diff": s - newCloud.length
             } );
 
         } )
