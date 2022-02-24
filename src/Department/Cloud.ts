@@ -140,8 +140,9 @@ export function CloudOptimizer (): Promise<string[]> {
         .then( cloud => {
             for ( let row of cloud ) {
                 for ( let parcel_patch of row.patch ) {
-                    if ( !newCloud.includes( parcel_patch ) ) newCloud.push( parcel_patch );
-                    else newCloud2.push( parcel_patch );
+                    if ( !newCloud.includes( parcel_patch.toString() ) ) 
+                        newCloud.push( parcel_patch.toString() );
+                    else newCloud2.push( parcel_patch.toString() );
                 }
             }
             rs( [ newCloud2, newCloud] as any );
