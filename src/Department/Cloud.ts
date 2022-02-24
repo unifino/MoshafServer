@@ -131,21 +131,24 @@ function isDuplicate ( data: string ): Promise<boolean> {
 
 export function CloudOptimizer (): Promise<string[]> {
 
-    let newCloud: string[] = [];
+    let newCloud: c.earthRaw[] = [];
     let newCloud2: string[] = [];
+    let t: number;
 
     return new Promise ( (rs, rx) => {
 
         CloudReport( [] )
         .then( cloud => {
             for ( let row of cloud ) {
-                for ( let parcel_patch of row.patch ) {
-                    if ( !newCloud.includes( parcel_patch.toString() ) ) 
-                        newCloud.push( parcel_patch.toString() );
-                    else newCloud2.push( parcel_patch.toString() );
+                for ( let x of row.patch ) {
+                    if ( x[0] === "Fav-" ) {
+                        t = newCloud.findIndex( x => x[0] === "Fav+" && x[1] === x[1] );
+                        if ( ~t ) newCloud.splice( t, 1 );
+                        else newCloud2.push( x.toString() );
+                    }
                 }
             }
-            rs( [ newCloud2, newCloud] as any );
+            rs( [ newCloud2, newCloud ] as any );
         } )
         .catch ( err => rx( "EC08: " + err ) )
 
