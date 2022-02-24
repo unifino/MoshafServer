@@ -166,8 +166,8 @@ export function CloudOptimizer (): Promise<{}> {
                     }
                     // .. add to Cloud or report
                     else {
-                        newCloud.find( x => x.toString() === x.toString() ) ?
-                        dub.push(x) : newCloud.push( x );
+                        newCloud.find( o => o.toString() === x.toString() ) ?
+                            dub.push(x) : newCloud.push( x );
                     }
 
                 }
