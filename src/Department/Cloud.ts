@@ -133,7 +133,7 @@ export function CloudOptimizer (): Promise<{}> {
 
     let newCloud: c.earthRaw[] = [];
     let odd: string[] = [];
-    let dub: c.earthRaw[] = [];
+    let dub: string[] = [];
     let t: number;
     let s: number = 0;
 
@@ -167,7 +167,7 @@ export function CloudOptimizer (): Promise<{}> {
                     // .. add to Cloud or report
                     else {
                         newCloud.find( o => o.toString() === x.toString() ) ?
-                            dub.push(x) : newCloud.push( x );
+                            dub.push( x.toString() ) : newCloud.push(x);
                     }
 
                 }
