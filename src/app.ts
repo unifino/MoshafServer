@@ -19,6 +19,16 @@ app.use( bodyParser.urlencoded( {
 
 // -- ===================================================================== Download =======
 
+app.get( '/merge', ( req: express.Request, res: express.Response ) => {
+
+    cloud.CloudReport( [] )
+    .then( result => res.json( { status: 200, answer: result } ) )
+    .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
+
+} );
+
+// -- ===================================================================== Download =======
+
 app.get( '/download', ( req: express.Request, res: express.Response ) => {
 
     // .. requests
