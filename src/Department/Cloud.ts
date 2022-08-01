@@ -39,6 +39,22 @@ client.connect();
 
 // -- ======================================================================================
 
+export function CloudVersion (): Promise<number> {
+
+    return new Promise ( (rs, rx) => {
+
+        const qry = `SELECT * FROM cloud`;
+
+        client.query( qry, ( err, r: Result ) =>
+            err ? rx(err) : rs( 0 )
+        );
+
+    } );
+
+}
+
+// -- ======================================================================================
+
 export function CloudReport ( filter: string[] ): Promise<c.Architecture[]> {
 
     return new Promise ( (rs, rx) => {

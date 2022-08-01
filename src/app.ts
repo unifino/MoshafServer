@@ -19,6 +19,16 @@ app.use( bodyParser.urlencoded( {
 
 // -- ===================================================================== Download =======
 
+app.get( '/getVar', ( req: express.Request, res: express.Response ) => {
+
+    cloud.CloudVersion()
+    .then( result => res.json( { status: 200, answer: result } ) )
+    .catch( err => res.json( { status: 400, answer: "ERR 02 : " + err } ) );
+
+} );
+
+// -- ===================================================================== Download =======
+
 app.get( '/merge', ( req: express.Request, res: express.Response ) => {
 
     cloud.CloudOptimizer()
@@ -55,6 +65,6 @@ app.post( '/upload', ( req: express.Request, res: express.Response ) => {
 
 // -- ============================================================ Listening on Port =======
 
-app.listen( PORT, () => console.info( `running on ${ PORT } ...` ) ); 
+app.listen( PORT, () => console.info( `running on ${ PORT } ...` ) );
 
 // -- ========================================================================= FINE =======
