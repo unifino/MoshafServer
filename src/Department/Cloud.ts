@@ -1,6 +1,5 @@
 import * as fs                          from "fs";
 import { Pool, Client }                 from 'pg';
-import { StringifyOptions } from "querystring";
 import * as c                           from '../types/cloud'
 
 
@@ -16,6 +15,11 @@ type Result = {
     // _types: ,
     // RowCtor: ,
     // rowAsArray:
+};
+
+type Result_2 = {
+    rowCount: number,
+    rows: [ { id: number, ver: number } ],
 };
 
 const client = new Pool( {
@@ -43,10 +47,10 @@ export function CloudVersion (): Promise<number> {
 
     return new Promise ( (rs, rx) => {
 
-        const qry = `SELECT * FROM cloud`;
+        const qry = `SELECT * FROM cloud_assist`;
 
-        client.query( qry, ( err, r: Result ) =>
-            err ? rx(err) : rs( 0 )
+        client.query( qry, ( err, r: Result_2 ) =>
+            err ? rx(err) : rs( r.rows[0].ver )
         );
 
     } );
