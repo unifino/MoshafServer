@@ -47,7 +47,7 @@ export function CloudVersion (): Promise<number> {
 
     return new Promise ( (rs, rx) => {
 
-        const qry = `SELECT * FROM cloud_assist`;
+        const qry = `SELECT * FROM cloud`;
 
         client.query( qry, ( err, r: Result_2 ) =>
             err ? rx(err) : rs( r.rows[0].ver )
