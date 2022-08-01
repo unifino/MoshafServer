@@ -19,7 +19,7 @@ app.use( bodyParser.urlencoded( {
 
 // -- ===================================================================== Download =======
 
-app.get( '/getVar', ( req: express.Request, res: express.Response ) => {
+app.get( '/getVer', ( req: express.Request, res: express.Response ) => {
 
     cloud.CloudVersion()
     .then( result => res.json( { status: 200, answer: result } ) )
